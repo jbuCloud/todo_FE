@@ -9,7 +9,7 @@
     margin-bottom: 2vh;
   }
 
-*/
+------------------------------
 .todo-page {
   padding: 4vh 5vw;
   font-family: sans-serif;
@@ -50,4 +50,185 @@
   font-size: 0.9rem;
   font-weight: bold;
   color: #000;
+}
+*/
+
+.todo-page {
+  padding: 4vh 5vw;
+  font-family: 'Apple SD Gothic Neo', sans-serif;
+  font-size: 1rem;
+  color: #333;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 2vw;
+  margin-bottom: 4vh;
+}
+
+.user-profile img {
+  width: 6vw;
+  height: 6vw;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 50%;
+}
+
+.user-profile strong {
+  font-size: 1.2rem;
+}
+
+.user-profile p {
+  font-size: 1rem;
+  margin: 0.3vh 0;
+}
+
+.todo-wrapper {
+  display: flex;
+  gap: 6vw;
+  flex-wrap: wrap;
+}
+
+.calendar-container {
+  flex: 1;
+}
+
+.calendar-container h3 {
+  font-size: 1.3rem;
+  margin-bottom: 2vh;
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 5vw);
+  gap: 1vw;
+}
+
+.calendar-day {
+  width: 5vw;
+  height: 5vw;
+  min-width: 36px;
+  min-height: 36px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 5vw;
+  font-weight: bold;
+  font-size: 0.9rem;
+  box-shadow: 0 0.3vh 0.6vh rgba(0, 0, 0, 0.08);
+  background-color: #eee;
+}
+
+.todo-content {
+  flex: 1.2;
+  background: #fff;
+  border-radius: 2vw;
+  padding: 3vh 3vw;
+  box-shadow: 0 0.5vh 1.5vh rgba(0, 0, 0, 0.05);
+  max-height: 70vh; /* 카드 크기에 맞춰서 최대 높이 설정 */
+  overflow-y: auto; /* 할 일 목록이 많으면 스크롤 */
+}
+
+.todo-section {
+  margin-bottom: 3vh;
+}
+
+.todo-section h4 {
+  font-size: 1.1rem;
+  margin-bottom: 1vh;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+  padding: 0.8vh 0;
+  font-size: 1rem;
+}
+
+.todo-item input[type="checkbox"] {
+  transform: scale(1.2);
+}
+
+.todo-badge {
+  display: inline-block;
+  min-width: 2rem;
+  height: 2rem;
+  border-radius: 1rem;
+  text-align: center;
+  line-height: 2rem;
+  font-size: 0.9rem;
+  color: white;
+  padding: 0 0.5vw;
+}
+ 
+.select-guide {
+  font-size: 1.1rem;
+  color: #888;
+  margin-top: 2vh;
+}
+
+.todo-add {
+  margin-top: 2vh;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1vw;
+  align-items: center;
+  padding: 1vh 0;
+}
+
+.todo-add input {
+  flex: 2;
+  font-size: 1rem;
+  padding: 1vh 1vw;
+  border: 1px solid #ccc;
+  border-radius: 0.8vw;
+}
+
+.todo-add select {
+  flex: 1;
+  font-size: 1rem;
+  padding: 1vh 1vw;
+  border-radius: 0.8vw;
+  border: 1px solid #ccc;
+}
+
+.todo-add button {
+  flex: none;
+  padding: 1vh 1.5vw;
+  font-size: 1rem;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 0.8vw;
+  cursor: pointer;
+}
+
+.todo-add button:hover {
+  background-color: #555;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 2vw;
+  margin-bottom: 4vh;
+}
+
+.user-profile img {
+  width: 6vw;
+  height: 6vw;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-profile strong {
+  font-size: 1.2rem;
+}
+
+.user-profile p {
+  font-size: 1rem;
+  margin: 0.3vh 0;
 }

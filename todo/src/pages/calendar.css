@@ -1,0 +1,9 @@
+.calendar-page {
+    padding: 4vh 5vw;
+    font-family: sans-serif;
+  }
+  
+  .calendar-page h2 {
+    font-size: 1.5rem;
+    margin-bottom: 2vh;
+  }

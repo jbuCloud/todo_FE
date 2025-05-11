@@ -1,0 +1,70 @@
+/*
+.header {
+    background-color: #f3f3f3;
+    padding: 2vh 5vw;
+    text-align: center;
+    border-bottom: 0.2vh solid #ddd;
+  }
+  
+  .logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+  */
+  .header {
+    width: 100%;
+    height: 4rem;
+    background-color: #ffffff;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .header-inner {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+  }
+  
+  .logo {
+    width: 4.5rem;
+    height: auto;
+  }
+  
+  .auth-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+  
+  /* 여기부터 새로 추가!! */
+  .auth-links a {
+    color: #555; /* 회색 글씨 */
+    text-decoration: none; /* 밑줄 없애기 */
+    font-weight: 500;
+    font-size: 1rem;
+  }
+  
+  .auth-links a:hover {
+    color: #000; /* 마우스 올리면 진한 검정색으로 변경 (선택사항) */
+  }
+  
+  .logout-button {
+    background: none;
+    border: none;
+    color: #007BFF;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-left: 1rem;
+  }
+  
+  .welcome {
+    font-weight: bold;
+    margin-right: 1rem;
+  }
+  

@@ -1,0 +1,111 @@
+.signup-container {
+    max-width: 700px;
+    margin: 2rem auto; /* 상단 여백을 줄여서 위로 밀기 */
+    padding: 0.5rem;    /* 내부 여백 줄여서 공간 절약 */
+    font-family: 'Pretendard', sans-serif;
+  }
+  
+  .signup-title {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+  
+  .signup-line {
+    height: 2px;
+    background-color: black;
+    width: 160%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 1rem; /* 아래 여백 줄여서 위로 밀기 */
+  }
+  
+  .signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* 폼 요소 간 간격을 줄여서 위로 밀기 */
+  }
+  
+  .form-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .form-group label {
+    width: 100px;
+    text-align: left;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  .form-group input {
+    flex: 1;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+  }
+  
+  /* ✅ 아이디 input-wrapper - 버튼 포함 */
+  .input-wrapper {
+    position: relative;
+    flex: 1;
+  }
+  
+  .input-wrapper input {
+    width: 100%;
+    padding-right: 7rem; /* 버튼 들어갈 공간 */
+  }
+  
+  .check-btn-inside {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0.5rem 0.75rem;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  
+  .error-msg {
+    font-size: 0.75rem;
+    color: #ff4d4f;
+    margin-left: 8vw;
+    margin-top: -1vh; /* 위쪽 여백 줄여서 조금 더 위로 밀기 */
+  }
+  
+  .signup-btn-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.2rem; /* 버튼 상단 여백 줄여서 위로 밀기 */
+  }
+  
+  .signup-btn {
+    width: 16vw; /* 대략 232px 기준 */
+    height: 8vh;   /* 대략 92px 기준, 필요 시 조정 가능 */
+    background-color: #000;
+    color: white;
+    font-size: 0.8rem;
+    border: none;
+    border-radius: 0.25rem; /* 4px = 0.25rem */
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-top: 0; /* 버튼의 상단 여백을 제거하거나 필요 시 조정 */
+  }
+  
+  .signup-btn:hover {
+    background-color: #333;
+  }
+  
+  .invalid-input {
+    border: 1px solid #ff4d4f !important;
+  }
+  

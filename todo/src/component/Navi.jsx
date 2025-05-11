@@ -1,12 +1,13 @@
+import { Link } from 'react-router-dom';
 import './navi.css';
 
-function Navi({ setPage }) {
+function Navi() {
   return (
     <nav className="navi">
-      <button onClick={() => setPage('calendar')}>Calendar</button>
-      <button onClick={() => setPage('todo')}>To-do</button>
-      <button onClick={() => setPage('routine')}>Routine</button>
-      <button onClick={() => setPage('my')}>My Page</button>
+      <Link to="/calendar"><button>Calendar</button></Link>
+      <Link to="/todo"><button>Todo</button></Link>
+      <Link to="/routine"><button>Routine</button></Link>
+      <Link to="/my"><button>My Page</button></Link>
     </nav>
   );
 }

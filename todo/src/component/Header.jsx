@@ -4,7 +4,7 @@ import './header.css';
 function Header() {
   return (
     <header className="header">
-      <h1 className="logo">Focus App</h1>
+      <h1 className="logo">중부대 구름톤 짱</h1>
     </header>
   );
 }

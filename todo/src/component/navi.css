@@ -5,9 +5,10 @@
     height: 8vh;
     background-color: #eeeeee;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     border-top: 0.2vh solid #ccc;
+    gap: 8vw;
   }
   
   .navi button {

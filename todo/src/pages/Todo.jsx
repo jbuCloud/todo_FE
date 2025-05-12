@@ -350,6 +350,7 @@ function Todo() {
 export default Todo;
 
 */
+
 import './todo.css';
 import profileImg from '../assets/profile.jpg';
 import { useState } from 'react';
@@ -377,6 +378,7 @@ function Todo() {
   const [todos, setTodos] = useState({
     '2025-05-11': [
       { text: '[학교] PPT 만들기', completed: true, category: 'school' },
+      { text: '[동아리] 라벨링 150개', completed: false, category: 'club' },
       { text: '[동아리] 라벨링 150개', completed: false, category: 'club' },
     ],
     '2025-05-10': [
@@ -474,9 +476,12 @@ function Todo() {
         </div>
 
         <div className="todo-content">
-          {renderTodoList()}
-          
-          {/* 할 일 추가 영역 */}
+          {/* ✅ 스크롤 가능한 영역 */}
+          <div className="todo-scroll-area">
+            {renderTodoList()}
+          </div>
+
+          {/* ✅ 하단 고정된 입력 영역 */}
           <div className="todo-add">
             <input
               type="text"

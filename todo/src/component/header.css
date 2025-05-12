@@ -21,6 +21,15 @@
     justify-content: center;
     position: relative;
   }
+
+  header h1 {
+  font-size: 20px; /* 원하는 폰트 크기 */
+  white-space: nowrap; /* 텍스트가 한 줄로 표시되도록 */
+  display: flex; /* flexbox로 텍스트 정렬 */
+  justify-content: center; /* 가로 중앙 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+}
+
   
   .header-inner {
     width: 100%;

@@ -120,14 +120,45 @@
 }
 
 .todo-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   flex: 1.2;
   background: #fff;
   border-radius: 2vw;
   padding: 3vh 3vw;
   box-shadow: 0 0.5vh 1.5vh rgba(0, 0, 0, 0.05);
-  max-height: 70vh; /* 카드 크기에 맞춰서 최대 높이 설정 */
-  overflow-y: auto; /* 할 일 목록이 많으면 스크롤 */
+  height: 50vh; /* 고정 높이 */
 }
+
+.todo-scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 0.5vw; /* 스크롤바 공간 고려 */
+}
+
+.todo-add {
+  margin-top: 2vh;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1vw;
+  align-items: center;
+  padding: 1vh 0;
+  border-top: 1px solid #ddd;
+}
+
+
+
+/* 스크롤바 스타일 (선택사항, 크롬 기준) */
+.todo-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.todo-content::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
 
 .todo-section {
   margin-bottom: 3vh;

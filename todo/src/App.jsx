@@ -1,4 +1,6 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useState } from 'react';
+
 import Calendar from './pages/Calendar';
 import My from './pages/My';
 import Routine from './pages/Routine';
@@ -7,26 +9,54 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Header from './component/Header';
 import Navi from './component/Navi';
+import Start from './pages/Start';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
     <Router>
       <div className="app-wrapper">
-        <Header />
+        {isLoggedIn && <Header />}
 
         <div className="page-content">
           <Routes>
-            <Route path="/calendar" element={<Calendar />} />
-            <Route path="/my" element={<My />} />
-            <Route path="/routine" element={<Routine />} />
-            <Route path="/todo" element={<Todo />} />
-            <Route path="/login" element={<Login />} />
+            <Route
+              path="/"
+              element={
+                isLoggedIn ? <Navigate to="/calendar" replace /> : <Start />
+              }
+            />
+            <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/" element={<h2>홈 페이지입니다</h2>} />
+            <Route
+              path="/calendar"
+              element={
+                isLoggedIn ? <Calendar /> : <Navigate to="/login" replace />
+              }
+            />
+            <Route
+              path="/my"
+              element={
+                isLoggedIn ? <My /> : <Navigate to="/login" replace />
+              }
+            />
+            <Route
+              path="/routine"
+              element={
+                isLoggedIn ? <Routine /> : <Navigate to="/login" replace />
+              }
+            />
+            <Route
+              path="/todo"
+              element={
+                isLoggedIn ? <Todo /> : <Navigate to="/login" replace />
+              }
+            />
           </Routes>
         </div>
 
-        <Navi />
+        {isLoggedIn && <Navi />}
       </div>
     </Router>
   );

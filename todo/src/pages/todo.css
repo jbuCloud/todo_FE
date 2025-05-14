@@ -53,8 +53,32 @@
 }
 */
 
+.completion-0 {
+  background-color: #eeeeee !important;
+}
+.completion-30 {
+  background-color: #FAD4E2 !important;
+}
+.completion-50 {
+  background-color: #F78FB3 !important;
+}
+.completion-70 {
+  background-color: #F04D9B !important;
+}
+.completion-100 {
+  background-color: #D60C75 !important;
+  color: white;
+}
+
+/* 선택된 날짜 강조 */
+.react-calendar__tile--active {
+  border: 2px solid #333;
+}
+
+/* 나머지 스타일은 네가 기존에 쓰던 대로 확장하면 돼 */
+
 .todo-page {
-  padding: 4vh 5vw;
+  padding: 1vh 5vw; /* 위쪽 padding 줄여서 전체적으로 위로 */
   font-family: 'Apple SD Gothic Neo', sans-serif;
   font-size: 1rem;
   color: #333;
@@ -73,6 +97,7 @@
   min-width: 40px;
   min-height: 40px;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .user-profile strong {
@@ -117,6 +142,7 @@
   font-size: 0.9rem;
   box-shadow: 0 0.3vh 0.6vh rgba(0, 0, 0, 0.08);
   background-color: #eee;
+  cursor: pointer;
 }
 
 .todo-content {
@@ -128,13 +154,13 @@
   border-radius: 2vw;
   padding: 3vh 3vw;
   box-shadow: 0 0.5vh 1.5vh rgba(0, 0, 0, 0.05);
-  height: 50vh; /* 고정 높이 */
+  height: 50vh;
 }
 
 .todo-scroll-area {
   flex: 1;
   overflow-y: auto;
-  padding-right: 0.5vw; /* 스크롤바 공간 고려 */
+  padding-right: 0.5vw;
 }
 
 .todo-add {
@@ -145,67 +171,6 @@
   align-items: center;
   padding: 1vh 0;
   border-top: 1px solid #ddd;
-}
-
-
-
-/* 스크롤바 스타일 (선택사항, 크롬 기준) */
-.todo-content::-webkit-scrollbar {
-  width: 8px;
-}
-
-.todo-content::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
-}
-
-
-.todo-section {
-  margin-bottom: 3vh;
-}
-
-.todo-section h4 {
-  font-size: 1.1rem;
-  margin-bottom: 1vh;
-}
-
-.todo-item {
-  display: flex;
-  align-items: center;
-  gap: 1vw;
-  padding: 0.8vh 0;
-  font-size: 1rem;
-}
-
-.todo-item input[type="checkbox"] {
-  transform: scale(1.2);
-}
-
-.todo-badge {
-  display: inline-block;
-  min-width: 2rem;
-  height: 2rem;
-  border-radius: 1rem;
-  text-align: center;
-  line-height: 2rem;
-  font-size: 0.9rem;
-  color: white;
-  padding: 0 0.5vw;
-}
- 
-.select-guide {
-  font-size: 1.1rem;
-  color: #888;
-  margin-top: 2vh;
-}
-
-.todo-add {
-  margin-top: 2vh;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1vw;
-  align-items: center;
-  padding: 1vh 0;
 }
 
 .todo-add input {
@@ -239,27 +204,90 @@
   background-color: #555;
 }
 
-.user-profile {
+.todo-section {
+  margin-bottom: 3vh;
+}
+
+.todo-section h4 {
+  font-size: 1.1rem;
+  margin-bottom: 1vh;
+}
+
+.todo-item {
   display: flex;
   align-items: center;
-  gap: 2vw;
-  margin-bottom: 4vh;
-}
-
-.user-profile img {
-  width: 6vw;
-  height: 6vw;
-  min-width: 40px;
-  min-height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.user-profile strong {
-  font-size: 1.2rem;
-}
-
-.user-profile p {
+  gap: 1vw;
+  padding: 0.8vh 0;
   font-size: 1rem;
-  margin: 0.3vh 0;
+}
+
+.todo-item input[type="checkbox"] {
+  transform: scale(1.2);
+}
+
+.todo-badge {
+  display: inline-block;
+  min-width: 2rem;
+  height: 2rem;
+  border-radius: 1rem;
+  text-align: center;
+  line-height: 2rem;
+  font-size: 0.9rem;
+  color: white;
+  padding: 0 0.5vw;
+}
+
+.select-guide {
+  font-size: 1.1rem;
+  color: #888;
+  margin-top: 2vh;
+}
+
+/* ✅ Scrollbar 스타일 */
+.todo-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.todo-content::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+/* ✅ 반응형 대응 */
+@media (max-width: 768px) {
+  .todo-wrapper {
+    flex-direction: column;
+  }
+
+  .calendar {
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  .calendar-day {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    font-size: 0.8rem;
+  }
+
+  .todo-content {
+    height: auto;
+    padding: 5vw;
+    border-radius: 4vw;
+  }
+
+  .todo-add input,
+  .todo-add select,
+  .todo-add button {
+    flex: 1 1 100%;
+  }
+
+  .user-profile img {
+    width: 10vw;
+    height: 10vw;
+  }
+
+  .user-profile {
+    gap: 4vw;
+  }
 }

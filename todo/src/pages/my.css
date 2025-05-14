@@ -1,39 +1,122 @@
+.my-page {
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: #fafafa;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #222;
+}
+
+h3 {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  color: #444;
+}
+
+/* 프로필 */
+.profile-section {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 0.8rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  position: relative;
+}
+
+.profile-info p {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.profile-info p strong {
+  color: #666;
+}
+
+.logout-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #ff7200;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #d75e00;
+}
+
+.logout-button:focus {
+  outline: none;
+}
+
+/* 테마 선택 */
+.theme-section {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 0.8rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
 .theme-options {
   display: flex;
-  flex-direction: column; /* 세로 정렬 */
-  gap: 1.5rem;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .theme-option {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   cursor: pointer;
-  padding: 1vh;
+  padding: 0.9rem 1rem;
   border: 2px solid transparent;
-  border-radius: 1vw;
-  transition: border 0.3s ease;
+  border-radius: 0.7rem;
+  transition: border 0.3s ease, background-color 0.3s ease;
+  background-color: #f9f9f9;
 }
 
 .theme-option:hover {
-  border-color: #ccc;
+  border-color: #ddd;
 }
 
 .theme-option.selected {
   border-color: #333;
+  background-color: #f0f0f0;
 }
 
 .theme-color-box {
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 2rem;
+  height: 2rem;
   border-radius: 0.4rem;
-  margin-right: 0.5rem;
+  margin-right: 0.4rem;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
 }
 
 .theme-label {
   margin-left: 1rem;
-  font-size: 0.95rem;
+  font-size: 1rem;
   text-transform: capitalize;
   color: #333;
   white-space: nowrap;
+  flex-shrink: 0;
 }

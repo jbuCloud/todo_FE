@@ -1,26 +1,43 @@
 // src/pages/Login.jsx
-
 import React, { useState } from 'react';
 import './login.css';
-import Logo from '../assets/kakao_login.png'; // ✅ 올바른 경로
+import Logo from '../image/kakao_login.png';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-function Login({ setIsLoggedIn }) {
+function LoginPage({ onLoginSuccess }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    if (username === '1234' && password === '1234') {
-      alert('로그인에 성공했습니다!');
-      setIsLoggedIn(true); // App.jsx의 상태 업데이트
-      localStorage.setItem('isLoggedIn', 'true'); // 선택 사항
-      localStorage.setItem('username', '최고의감자🥔');
-      navigate('/calendar');
-    } else {
-      alert('아이디 또는 비밀번호는 1234로 입력해주세요.');
+    try {
+      const response = await axios.post('http://192.168.0.164:8000/myapp/users/get-user/', {
+        userId: username,
+        userpwd: password
+      });
+
+      if (response.data.success) {
+        alert('로그인에 성공했습니다!');
+
+        // 상태 반영
+        if (onLoginSuccess) {
+          onLoginSuccess(username);
+        }
+
+        navigate('/main');
+      } else {
+        alert('아이디 또는 비밀번호가 올바르지 않습니다.');
+      }
+    } catch (error) {
+      console.error('로그인 요청 실패:', error);
+      if (error.response?.data?.message) {
+        alert(error.response.data.message);
+      } else {
+        alert('서버 오류로 로그인에 실패했습니다.');
+      }
     }
   };
 
@@ -52,6 +69,7 @@ function Login({ setIsLoggedIn }) {
           src={Logo}
           alt="카카오 로그인"
           className="kakao-login-img"
+          style={{ cursor: 'pointer' }}
         />
       </div>
 
@@ -63,4 +81,4 @@ function Login({ setIsLoggedIn }) {
   );
 }
 
-export default Login;
+export default LoginPage;

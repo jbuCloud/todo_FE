@@ -14,7 +14,7 @@ function Start() {
   };
 
   const handleSignupClick = () => {
-    navigate('/signup');
+    navigate('/Start');
   };
 
   return (

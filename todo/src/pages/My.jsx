@@ -1,6 +1,6 @@
 import './my.css';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // ✅ 추가
+import { useNavigate } from 'react-router-dom';
 
 const themeColors = {
   black: ['#eeeeee', '#888888', '#444444', '#000000'],
@@ -10,31 +10,28 @@ const themeColors = {
   yellow:['#eeeeee', '#fff2a4', '#ffe04d', '#ffca00'],
 };
 
-function My() {
+function My({ setIsLoggedIn }) {
   const [selectedTheme, setSelectedTheme] = useState('black');
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const navigate = useNavigate(); // ✅ 추가
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-    setIsLoggedIn(false);
-    navigate('/start'); // ✅ 로그아웃 후 Start.jsx로 이동
+    setIsLoggedIn(false); // 🔄 App의 상태 변경
+    navigate('/'); // 🔁 Start 페이지로 이동
   };
 
   return (
     <div className="my-page">
       <h2>My Page</h2>
 
-      {isLoggedIn && (
-        <div className="profile-section">
-          <h3>회원 프로필</h3>
-          <div className="profile-info">
-            <p><strong>이름:</strong> 홍길동</p>
-            <p><strong>아이디:</strong> honggildong123</p>
-            <p><strong>이메일:</strong> honggildong@example.com</p>
-            <button className="logout-button" onClick={handleLogout}>로그아웃</button>
-          </div>
+      <div className="profile-section">
+        <h3>회원 프로필</h3>
+        <div className="profile-info">
+          <p><strong>이름:</strong> 홍길동</p>
+          <p><strong>아이디:</strong> honggildong123</p>
+          <p><strong>이메일:</strong> honggildong@example.com</p>
+          <button className="logout-button" onClick={handleLogout}>로그아웃</button>
         </div>
-      )}
+      </div>
 
       <div className="theme-section">
         <h3>📌 테마 선택</h3>

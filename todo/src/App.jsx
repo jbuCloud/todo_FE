@@ -65,7 +65,7 @@ function App() {
 
 export default App;
 */
-
+// src/App.jsx
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useState } from 'react';
 
@@ -95,7 +95,6 @@ function App() {
                 isLoggedIn ? <Navigate to="/calendar" replace /> : <Start />
               }
             />
-            <Route path="/start" element={<Start />} />
             <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
             <Route path="/signup" element={<Signup />} />
             <Route

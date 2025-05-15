@@ -10,7 +10,7 @@ import Signup from './pages/Signup';
 import Header from './component/Header';
 import Navi from './component/Navi';
 import Start from './pages/Start';
-import KakaoCallback from './pages/KakaoCallback'; // 추가
+import KakaoCallback from './pages/KakaoCallback';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -22,39 +22,14 @@ function App() {
 
         <div className="page-content">
           <Routes>
-            <Route
-              path="/"
-              element={
-                isLoggedIn ? <Navigate to="/calendar" replace /> : <Start />
-              }
-            />
+            <Route path="/" element={isLoggedIn ? <Navigate to="/calendar" replace /> : <Start />} />
             <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-            <Route path="/signup" element={<Signup />} />
+            <Route path="/signup" element={<Signup setIsLoggedIn={setIsLoggedIn} />} />
             <Route path="/callback" element={<KakaoCallback setIsLoggedIn={setIsLoggedIn} />} />
-            <Route
-              path="/calendar"
-              element={
-                isLoggedIn ? <Calendar /> : <Navigate to="/login" replace />
-              }
-            />
-            <Route
-              path="/my"
-              element={
-                isLoggedIn ? <My setIsLoggedIn={setIsLoggedIn} /> : <Navigate to="/login" replace />
-              }
-            />
-            <Route
-              path="/routine"
-              element={
-                isLoggedIn ? <Routine /> : <Navigate to="/login" replace />
-              }
-            />
-            <Route
-              path="/todo"
-              element={
-                isLoggedIn ? <Todo /> : <Navigate to="/login" replace />
-              }
-            />
+            <Route path="/calendar" element={isLoggedIn ? <Calendar /> : <Navigate to="/login" replace />} />
+            <Route path="/my" element={isLoggedIn ? <My setIsLoggedIn={setIsLoggedIn} /> : <Navigate to="/login" replace />} />
+            <Route path="/routine" element={isLoggedIn ? <Routine /> : <Navigate to="/login" replace />} />
+            <Route path="/todo" element={isLoggedIn ? <Todo /> : <Navigate to="/login" replace />} />
           </Routes>
         </div>
 

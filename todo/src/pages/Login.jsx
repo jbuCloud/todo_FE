@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './login.css';
-import Logo from '../image/kakao_login.png';
+import Logo from '../assets/kakao_login.png';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -11,12 +11,14 @@ function Login({ setIsLoggedIn }) {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await axios.post('http://192.168.0.164:8000/myapp/users/get-user/', {
-        userId: username,
-        userpwd: password,
-      });
+      const response = await axios.post(
+        'http://192.168.0.67:8080/get-user/', // ✅ 서버 IP 기준
+        {
+          userId: username,
+          userpwd: password,
+        }
+      );
 
       if (response.data.success) {
         alert('로그인에 성공했습니다!');

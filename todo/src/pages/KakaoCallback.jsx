@@ -1,71 +1,61 @@
-import React, { useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import React, { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function KakaoCallback({ setIsLoggedIn }) {
   const navigate = useNavigate();
-  const location = useLocation();
+  const fetchedRef = useRef(false);
 
   useEffect(() => {
-    const code = new URLSearchParams(location.search).get('code');
+    const isCallback = window.location.pathname === '/callback';
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
 
-    const fetchKakaoUser = async () => {
-      try {
-        const tokenRes = await axios.post(
-          'https://kauth.kakao.com/oauth/token',
-          null,
-          {
-            params: {
-              grant_type: 'authorization_code',
-              client_id: '52c4872fc30d423c710bb20bb07f874e',
-              redirect_uri: 'http://localhost:3000/callback',
-              code: code,
-            },
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
-            },
+    console.log('✅ useEffect 실행됨');
+    console.log('📍 현재 경로:', window.location.pathname);
+    console.log('📍 code:', code);
+
+    if (isCallback && code && !fetchedRef.current) {
+      fetchedRef.current = true;
+      console.log('🚀 fetch 실행 시작! 전송할 code:', code);
+
+      fetch('http://192.168.0.67:8080/kakao/login', { // ✅ IP로 통일
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ code }),
+      })
+        .then(async (response) => {
+          console.log('🟢 서버 응답 상태:', response.status);
+          const data = await response.json();
+          console.log('📦 응답 데이터:', data);
+
+          if (response.status === 200) {
+            localStorage.setItem('accessToken', data.accessToken);
+            localStorage.setItem('refreshToken', data.refreshToken);
+            setIsLoggedIn(true);
+            navigate('/calendar');
+         } else if (response.status === 401) {
+  navigate('/signup', {
+    state: {
+      email: data.email,
+      nickname: data.nickname,
+      kakaoId: data.kakaoId,
+      profileUrl: data.profileUrl,
+    },
+  });
+}
+ else {
+            throw new Error('예상치 못한 응답입니다.');
           }
-        );
-
-        const { access_token } = tokenRes.data;
-
-        const userRes = await axios.get('https://kapi.kakao.com/v2/user/me', {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-          },
-        });
-
-        const email = userRes.data.kakao_account.email;
-
-        const backendRes = await axios.post(
-          'http://192.168.0.164:8000/myapp/users/kakao-login/',
-          {
-            email: email,
-            password: 'securePassword123',
-          },
-          {
-            headers: { 'Content-Type': 'application/json' },
-          }
-        );
-
-        if (backendRes.data.success) {
-          setIsLoggedIn(true);
-          navigate('/calendar');
-        } else {
-          alert('카카오 계정이 등록되어 있지 않습니다.');
+        })
+        .catch((error) => {
+          console.error('❌ fetch 에러:', error);
+          alert('카카오 로그인 처리 중 오류가 발생했습니다.');
           navigate('/login');
-        }
-      } catch (err) {
-        console.error('카카오 로그인 처리 실패:', err);
-        alert('카카오 로그인에 실패했습니다.');
-        navigate('/login');
-      }
-    };
-
-    if (code) {
-      fetchKakaoUser();
+        });
     }
-  }, [location.search, navigate, setIsLoggedIn]);
+  }, [navigate, setIsLoggedIn]);
 
   return <div>카카오 로그인 처리 중입니다...</div>;
 }

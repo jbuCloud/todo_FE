@@ -11,9 +11,19 @@ function Login({ setIsLoggedIn }) {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
+    // ✅ 테스트 로그인 (서버 없이 id: 1234, pw: 1234)
+    if (username === '1234' && password === '1234') {
+      alert('테스트 로그인에 성공했습니다!');
+      setIsLoggedIn(true);
+      navigate('/calendar');
+      return;
+    }
+
+    // ✅ 실제 서버 요청
     try {
       const response = await axios.post(
-        'http://192.168.0.67:8080/get-user/', // ✅ 서버 IP 기준
+        'http://192.168.0.67:8080/get-user/',
         {
           userId: username,
           userpwd: password,
@@ -69,11 +79,6 @@ function Login({ setIsLoggedIn }) {
           style={{ cursor: 'pointer' }}
           onClick={handleKakaoLogin}
         />
-      </div>
-
-      <div className="login-links">
-        <a href="/kakao-signup">카카오로 회원가입</a>
-        <a href="/signup">회원가입</a>
       </div>
     </div>
   );

@@ -505,7 +505,7 @@ function Todo() {
 
 export default Todo;
 */
-
+/*
 import 'react-calendar/dist/Calendar.css';
 import './todo.css';
 import Calendar from 'react-calendar';
@@ -635,5 +635,174 @@ function Todo() {
     </div>
   );
 }
+
+export default Todo;
+*/
+// Todo.jsx
+import React, { useState, useEffect, useCallback } from 'react';
+import './todo.css';
+
+const categories = ['업무', '개인', '학습', '운동', '기타'];
+
+const Todo = () => {
+  const [todos, setTodos] = useState([]);
+  const [newTodo, setNewTodo] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('업무');
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  const [calendarData, setCalendarData] = useState([]);
+
+  const updateAchievements = (updatedTodos) => {
+    const completedCount = updatedTodos.filter(todo => todo.completed).length;
+    console.log(`🎉 완료한 할 일 수: ${completedCount}`);
+  };
+
+  const getDaysInMonth = (year, month) => new Date(year, month + 1, 0).getDate();
+
+  const getMonthData = useCallback((year, month) => {
+    const daysInMonth = getDaysInMonth(year, month);
+    const firstDayOfMonth = new Date(year, month, 1).getDay();
+    const data = [];
+
+    const prevMonthDays = month === 0 ? getDaysInMonth(year - 1, 11) : getDaysInMonth(year, month - 1);
+    for (let i = 0; i < firstDayOfMonth; i++) {
+      data.push({
+        date: new Date(month === 0 ? year - 1 : year, month === 0 ? 11 : month - 1, prevMonthDays - firstDayOfMonth + i + 1),
+        currentMonth: false
+      });
+    }
+
+    for (let i = 1; i <= daysInMonth; i++) {
+      data.push({
+        date: new Date(year, month, i),
+        currentMonth: true
+      });
+    }
+
+    const remainingDays = 42 - data.length;
+    for (let i = 1; i <= remainingDays; i++) {
+      data.push({
+        date: new Date(month === 11 ? year + 1 : year, month === 11 ? 0 : month + 1, i),
+        currentMonth: false
+      });
+    }
+
+    return data;
+  }, []);
+
+  useEffect(() => {
+    setCalendarData(getMonthData(currentYear, currentMonth));
+  }, [currentMonth, currentYear, getMonthData]);
+
+  const prevMonth = () => {
+    setCurrentMonth(currentMonth === 0 ? 11 : currentMonth - 1);
+    setCurrentYear(currentMonth === 0 ? currentYear - 1 : currentYear);
+  };
+
+  const nextMonth = () => {
+    setCurrentMonth(currentMonth === 11 ? 0 : currentMonth + 1);
+    setCurrentYear(currentMonth === 11 ? currentYear + 1 : currentYear);
+  };
+
+  const formatDate = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+
+  const handleDateClick = (date) => setSelectedDate(date);
+
+  const handleAddTodo = (e) => {
+    e.preventDefault();
+    if (newTodo.trim()) {
+      const newTodoItem = {
+        id: Date.now(),
+        text: newTodo,
+        category: selectedCategory,
+        completed: false,
+        date: formatDate(selectedDate)
+      };
+      const updatedTodos = [...todos, newTodoItem];
+      setTodos(updatedTodos);
+      setNewTodo('');
+      updateAchievements(updatedTodos);
+    }
+  };
+
+  const toggleTodoCompletion = (id) => {
+    const updatedTodos = todos.map(todo =>
+      todo.id === id ? { ...todo, completed: !todo.completed } : todo
+    );
+    setTodos(updatedTodos);
+    updateAchievements(updatedTodos);
+  };
+
+  const todosForSelectedDay = todos.filter(todo => todo.date === formatDate(selectedDate));
+
+  const monthNames = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
+
+  return (
+    <div className="todo-app">
+      <div className="user-profile">
+        <img src="/profile.jpg" alt="profile" className="profile-pic" />
+        <div>
+          <h2 className="nickname">홍길동</h2>
+          <p className="status-message">오늘도 화이팅 💪</p>
+        </div>
+      </div>
+
+      <div className="calendar-side">
+        <div className="calendar-header">
+          <button onClick={prevMonth}>&lt;</button>
+          <h2>{currentYear}년 {monthNames[currentMonth]}</h2>
+          <button onClick={nextMonth}>&gt;</button>
+        </div>
+        <div className="calendar-grid">
+          <div className="calendar-day-names">
+            {["일","월","화","수","목","금","토"].map(d => <div key={d}>{d}</div>)}
+          </div>
+          <div className="calendar-days">
+            {calendarData.map((day, i) => (
+              <div
+                key={i}
+                className={`calendar-day ${day.currentMonth ? 'current-month' : 'other-month'} ${formatDate(day.date) === formatDate(selectedDate) ? 'selected-day' : ''}`}
+                onClick={() => handleDateClick(day.date)}
+              >
+                {day.date.getDate()}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="todo-side">
+        <h2>{formatDate(selectedDate)} Todo</h2>
+        <form onSubmit={handleAddTodo} className="todo-form">
+          <input
+            type="text"
+            value={newTodo}
+            onChange={(e) => setNewTodo(e.target.value)}
+            placeholder="할 일을 입력하세요"
+          />
+          <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
+            {categories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
+          </select>
+          <button type="submit">추가</button>
+        </form>
+        <ul className="todo-list">
+          {todosForSelectedDay.length === 0 ? (
+            <li>등록된 할 일이 없습니다.</li>
+          ) : (
+            todosForSelectedDay.map(todo => (
+              <li key={todo.id} className={todo.completed ? 'completed' : ''}>
+                <span>{todo.text} [{todo.category}]</span>
+                <button onClick={() => toggleTodoCompletion(todo.id)}>
+                  {todo.completed ? '✓' : '○'}
+                </button>
+              </li>
+            ))
+          )}
+        </ul>
+      </div>
+    </div>
+  );
+};
 
 export default Todo;

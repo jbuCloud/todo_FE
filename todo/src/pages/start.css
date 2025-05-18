@@ -44,7 +44,7 @@
   cursor: pointer;
 }
 
-.signup-btn {
+.login-btn {
   background-color: black;
   color: white;
 }
@@ -60,8 +60,8 @@
   border-radius: 8px;
 }
 
-.login-btn {
+.signup-btn {
   background: none;
   color: #222;
-  font-weight: bold;
+  font-weight: lighter;
 }

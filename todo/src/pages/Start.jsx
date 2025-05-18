@@ -24,8 +24,8 @@ function Start() {
       <h1 className="start-title">TimeRoutine</h1>
       <p className="start-subtext">일정관리와 루틴관리를 매일 기록해보세요</p>
 
-      <button className="btn signup-btn" onClick={handleSignupClick}>
-        회원가입
+      <button className="btn login-btn" onClick={handleSignupClick}>
+        로그인
       </button>
 
       <button
@@ -36,8 +36,8 @@ function Start() {
         <img src={kakaoLoginImg} alt="카카오 로그인 버튼" />
       </button>
 
-      <button className="btn login-btn" onClick={handleLoginClick}>
-        일반 로그인
+      <button className="btn signup-btn" onClick={handleLoginClick}>
+        회원가입
       </button>
     </div>
   );

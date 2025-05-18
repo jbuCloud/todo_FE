@@ -639,13 +639,13 @@ function Todo() {
 export default Todo;
 */
 
-
 import React, { useState, useEffect } from 'react';
 import './todo.css';
 
-const categories = ['업무', '개인', '학습', '운동', '기타','추가'];
-
 const Todo = () => {
+  // 기본 카테고리 (마지막 '추가' 옵션 포함)
+  const [categories, setCategories] = useState(['업무', '개인', '학습', '운동', '기타', '추가']);
+  
   // 사용자 정보 상태
   const [user, setUser] = useState({
     id: 'user123',
@@ -659,6 +659,10 @@ const Todo = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedTodo, setSelectedTodo] = useState(null);
   const [achievements, setAchievements] = useState({});
+
+  // 새 카테고리 관련 상태
+  const [categoryModalOpen, setCategoryModalOpen] = useState(false);
+  const [newCategory, setNewCategory] = useState('');
 
   // 달력 데이터 계산
   const getDaysInMonth = (year, month) => {
@@ -734,6 +738,28 @@ const Todo = () => {
   // 날짜 클릭 핸들러
   const handleDateClick = (date) => {
     setSelectedDate(date);
+  };
+
+  // 카테고리 선택 핸들러
+  const handleCategoryChange = (e) => {
+    const value = e.target.value;
+    if (value === '추가') {
+      setCategoryModalOpen(true);
+    } else {
+      setSelectedCategory(value);
+    }
+  };
+
+  // 새 카테고리 추가 핸들러
+  const handleAddCategory = () => {
+    if (newCategory.trim() !== '') {
+      // 새 카테고리 배열 생성 ('추가' 옵션은 항상 마지막에 유지)
+      const newCategories = [...categories.filter(cat => cat !== '추가'), newCategory, '추가'];
+      setCategories(newCategories);
+      setSelectedCategory(newCategory);
+      setNewCategory('');
+      setCategoryModalOpen(false);
+    }
   };
 
   // 할 일 추가
@@ -986,7 +1012,7 @@ const Todo = () => {
               />
               <select
                 value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
+                onChange={handleCategoryChange}
                 className="category-select"
               >
                 {categories.map(category => (
@@ -1021,6 +1047,35 @@ const Todo = () => {
             )}
           </div>
         </div>
+
+        {/* 새 카테고리 추가 모달 */}
+        {categoryModalOpen && (
+          <div className="modal-backdrop">
+            <div className="modal category-modal">
+              <h3>새 카테고리 추가</h3>
+              <input
+                type="text"
+                value={newCategory}
+                onChange={(e) => setNewCategory(e.target.value)}
+                placeholder="카테고리 이름 입력"
+                className="category-input"
+                autoFocus
+              />
+              <div className="modal-buttons">
+                <button onClick={handleAddCategory}>추가</button>
+                <button 
+                  onClick={() => {
+                    setCategoryModalOpen(false);
+                    setSelectedCategory(categories[0]);
+                  }} 
+                  className="close-button"
+                >
+                  취소
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* 할 일 상세 모달 */}
         {modalOpen && selectedTodo && (
@@ -1058,7 +1113,8 @@ const Todo = () => {
             </div>
           </div>
         )}
-                {/* 할 일 편집 모달 */}
+        
+        {/* 할 일 편집 모달 */}
         {editModalOpen && (
           <div className="modal-backdrop">
             <div className="modal edit-modal">
@@ -1074,7 +1130,7 @@ const Todo = () => {
                 onChange={(e) => setEditCategory(e.target.value)}
                 className="category-select"
               >
-                {categories.map(category => (
+                {categories.filter(cat => cat !== '추가').map(category => (
                   <option key={category} value={category}>{category}</option>
                 ))}
               </select>
@@ -1085,8 +1141,9 @@ const Todo = () => {
             </div>
           </div>
         )}
-    </div> 
-  </div> 
+      </div>
+    </div>
   );
 };
+
 export default Todo;

@@ -1,7 +1,47 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { LogOut, Check } from 'lucide-react'; // 아이콘 오류 해결: lucide-react 설치 필요
+import React, { useState, useEffect } from 'react';
+import { LogOut, Check, Pencil, Save } from 'lucide-react';
 import './my.css';
-import defaultProfile from '../assets/profile.jpg'; // 기본 프로필 이미지
+import defaultProfile from '../assets/profile.jpg';
+
+// ✅ 테마 옵션은 컴포넌트 밖으로 분리해서 매번 새로 생성되지 않도록 함
+const themeOptions = [
+  {
+    id: 'theme-blue',
+    name: '블루',
+    colors: {
+      primary: '#1a73e8',
+      secondary: '#4285f4',
+      background: '#f0f4ff',
+    },
+  },
+  {
+    id: 'theme-green',
+    name: '그린',
+    colors: {
+      primary: '#0f9d58',
+      secondary: '#34a853',
+      background: '#f0fff4',
+    },
+  },
+  {
+    id: 'theme-orange',
+    name: '오렌지',
+    colors: {
+      primary: '#ff6f0f',
+      secondary: '#ff8534',
+      background: '#fff4e6',
+    },
+  },
+  {
+    id: 'theme-purple',
+    name: '퍼플',
+    colors: {
+      primary: '#7e57c2',
+      secondary: '#9575cd',
+      background: '#f3e5f5',
+    },
+  },
+];
 
 const My = () => {
   const [userInfo, setUserInfo] = useState({
@@ -9,86 +49,69 @@ const My = () => {
     name: '홍길동',
     email: 'user123@example.com',
     profileImage: null,
+    statusMessage: '안녕하세요! 반갑습니다.',
   });
 
-  const themeOptions = [
-    {
-      id: 'theme-blue',
-      name: '블루',
-      colors: {
-        primary: '#1a73e8',
-        secondary: '#4285f4',
-        background: '#f0f4ff',
-      },
-    },
-    {
-      id: 'theme-green',
-      name: '그린',
-      colors: {
-        primary: '#0f9d58',
-        secondary: '#34a853',
-        background: '#f0fff4',
-      },
-    },
-    {
-      id: 'theme-orange',
-      name: '오렌지',
-      colors: {
-        primary: '#ff6f0f',
-        secondary: '#ff8534',
-        background: '#fff4e6',
-      },
-    },
-    {
-      id: 'theme-purple',
-      name: '퍼플',
-      colors: {
-        primary: '#7e57c2',
-        secondary: '#9575cd',
-        background: '#f3e5f5',
-      },
-    },
-  ];
-
+  const [isEditingStatus, setIsEditingStatus] = useState(false);
+  const [tempStatusMessage, setTempStatusMessage] = useState('');
   const [currentTheme, setCurrentTheme] = useState('theme-blue');
 
-  // useCallback으로 감싼 테마 변경 함수
-  const changeTheme = useCallback(
-    (themeId) => {
-      setCurrentTheme(themeId);
-      localStorage.setItem('userTheme', themeId);
+  // ✅ 일반 함수로 테마 변경
+  const changeTheme = (themeId) => {
+    setCurrentTheme(themeId);
+    localStorage.setItem('userTheme', themeId);
 
-      const theme = themeOptions.find((t) => t.id === themeId);
-      if (theme) {
-        document.documentElement.style.setProperty('--primary-color', theme.colors.primary);
-        document.documentElement.style.setProperty('--secondary-color', theme.colors.secondary);
-        document.documentElement.style.setProperty('--background-color', theme.colors.background);
-      }
-    },
-    [themeOptions]
-  );
+    const theme = themeOptions.find((t) => t.id === themeId);
+    if (theme) {
+      document.documentElement.style.setProperty('--primary-color', theme.colors.primary);
+      document.documentElement.style.setProperty('--secondary-color', theme.colors.secondary);
+      document.documentElement.style.setProperty('--background-color', theme.colors.background);
+    }
+  };
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('userTheme');
-    if (savedTheme) {
-      changeTheme(savedTheme);
-    } else {
-      changeTheme('theme-blue');
+    changeTheme(savedTheme || 'theme-blue');
+
+    const savedStatusMessage = localStorage.getItem('userStatusMessage');
+    if (savedStatusMessage) {
+      setUserInfo((prevState) => ({
+        ...prevState,
+        statusMessage: savedStatusMessage,
+      }));
     }
-  }, [changeTheme]);
+  }, []);
 
   const handleProfileImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        setUserInfo({
-          ...userInfo,
+        setUserInfo((prevState) => ({
+          ...prevState,
           profileImage: event.target.result,
-        });
+        }));
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const startEditingStatus = () => {
+    setTempStatusMessage(userInfo.statusMessage);
+    setIsEditingStatus(true);
+  };
+
+  const saveStatusMessage = () => {
+    setUserInfo((prevState) => ({
+      ...prevState,
+      statusMessage: tempStatusMessage,
+    }));
+    localStorage.setItem('userStatusMessage', tempStatusMessage);
+    setIsEditingStatus(false);
+  };
+
+  const handleStatusChange = (e) => {
+    setTempStatusMessage(e.target.value);
   };
 
   const handleLogout = () => {
@@ -132,6 +155,33 @@ const My = () => {
             <div className="info-row">
               <div className="info-label">이메일</div>
               <div className="info-value">{userInfo.email}</div>
+            </div>
+            <div className="info-row status-message-row">
+              <div className="info-label">상태 메시지</div>
+              <div className="info-value status-message-container">
+                {isEditingStatus ? (
+                  <div className="status-edit-container">
+                    <input
+                      type="text"
+                      value={tempStatusMessage}
+                      onChange={handleStatusChange}
+                      className="status-input"
+                      maxLength="50"
+                      autoFocus
+                    />
+                    <button className="status-save-btn" onClick={saveStatusMessage}>
+                      <Save size={18} />
+                    </button>
+                  </div>
+                ) : (
+                  <div className="status-display">
+                    <span>{userInfo.statusMessage}</span>
+                    <button className="status-edit-btn" onClick={startEditingStatus}>
+                      <Pencil size={16} />
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

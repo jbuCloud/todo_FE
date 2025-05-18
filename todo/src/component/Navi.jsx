@@ -1,15 +1,16 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './navi.css';
 
 function Navi() {
+  const navigate = useNavigate();
+
   return (
     <nav className="navi">
-      <Link to="/calendar"><button>Calendar</button></Link>
-      <Link to="/todo"><button>Todo</button></Link>
-      <Link to="/routine"><button>Routine</button></Link>
-      <Link to="/my"><button>My Page</button></Link>
+      <button onClick={() => navigate('/calendar')}>Calendar</button>
+      <button onClick={() => navigate('/todo')}>Todo</button>
+      <button onClick={() => navigate('/routine')}>Routine</button>
+      <button onClick={() => navigate('/my')}>My Page</button>
     </nav>
   );
 }
-
 export default Navi;

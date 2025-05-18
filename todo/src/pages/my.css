@@ -249,3 +249,99 @@
     width: calc(50% - 0.5rem);
   }
 }
+
+/* my.css에 추가할 스타일 */
+
+/* 기존 스타일은 유지하고 상태 메시지 관련 스타일만 추가 */
+
+/* 상태 메시지 행 스타일 */
+.status-message-row {
+  margin-top: 10px;
+}
+
+/* 상태 메시지 컨테이너 */
+.status-message-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+/* 상태 메시지 디스플레이 */
+.status-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* 상태 메시지 텍스트 */
+.status-display span {
+  flex-grow: 1;
+  margin-right: 10px;
+  color: #333;
+  font-size: 0.95rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 상태 메시지 편집 버튼 */
+.status-edit-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #777;
+  padding: 4px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.status-edit-btn:hover {
+  background-color: var(--background-color);
+  color: var(--primary-color);
+}
+
+/* 상태 메시지 편집 컨테이너 */
+.status-edit-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* 상태 메시지 입력 필드 */
+.status-input {
+  flex-grow: 1;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.status-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb), 0.1);
+}
+
+/* 상태 메시지 저장 버튼 */
+.status-save-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--primary-color);
+  margin-left: 8px;
+  padding: 6px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.status-save-btn:hover {
+  background-color: var(--background-color);
+}

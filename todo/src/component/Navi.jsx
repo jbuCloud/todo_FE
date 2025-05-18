@@ -6,11 +6,32 @@ function Navi() {
 
   return (
     <nav className="navi">
-      <button onClick={() => navigate('/calendar')}>Calendar</button>
-      <button onClick={() => navigate('/todo')}>Todo</button>
-      <button onClick={() => navigate('/routine')}>Routine</button>
-      <button onClick={() => navigate('/my')}>My Page</button>
+      <button onClick={() => {
+        console.log('✅ 이동: /calendar');
+        navigate('/calendar');
+      }}>
+        Home
+      </button>
+      <button onClick={() => {
+        console.log('✅ 이동: /todo');
+        navigate('/todo');
+      }}>
+        Todo
+      </button>
+      <button onClick={() => {
+        console.log('✅ 이동: /routine');
+        navigate('/routine');
+      }}>
+        Routine
+      </button>
+      <button onClick={() => {
+        console.log('✅ 이동: /my');
+        navigate('/my');
+      }}>
+        My Page
+      </button>
     </nav>
   );
 }
+
 export default Navi;

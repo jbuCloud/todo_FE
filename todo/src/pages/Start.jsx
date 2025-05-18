@@ -1,7 +1,3 @@
-
-// src/pages/Start.jsx
-// src/pages/Start.jsx
-
 import { useNavigate } from 'react-router-dom';
 import './start.css';
 import kakaoLoginImg from '../assets/kakao_login.png';
@@ -14,7 +10,7 @@ function Start() {
   };
 
   const handleSignupClick = () => {
-    navigate('/Start');
+    navigate('/signup');
   };
 
   return (
@@ -24,10 +20,12 @@ function Start() {
       <h1 className="start-title">TimeRoutine</h1>
       <p className="start-subtext">일정관리와 루틴관리를 매일 기록해보세요</p>
 
-      <button className="btn login-btn" onClick={handleSignupClick}>
+      {/* 로그인 버튼 → login 페이지로 이동 */}
+      <button className="btn login-btn" onClick={handleLoginClick}>
         로그인
       </button>
 
+      {/* 카카오 로그인 버튼 */}
       <button
         className="btn kakao-login-btn"
         onClick={handleLoginClick}
@@ -36,7 +34,8 @@ function Start() {
         <img src={kakaoLoginImg} alt="카카오 로그인 버튼" />
       </button>
 
-      <button className="btn signup-btn" onClick={handleLoginClick}>
+      {/* 회원가입 버튼 → signup 페이지로 이동 */}
+      <button className="btn signup-btn" onClick={handleSignupClick}>
         회원가입
       </button>
     </div>

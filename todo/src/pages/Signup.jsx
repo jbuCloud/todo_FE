@@ -201,23 +201,21 @@ function Signup() {
 
 export default Signup;
 */
-
-
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import './signup.css';
 
 function Signup({ setIsLoggedIn }) {
   const location = useLocation();
   const navigate = useNavigate();
+
   const userData = location.state || {};
 
   const [form, setForm] = useState({
     email: userData.email || '',
     nickname: userData.nickname || '',
-    introText: '',
-    kakaoId: userData.kakaoId || '',
     profileUrl: userData.profileUrl || '',
-    name: '' // ✅ 이름 필드 추가
+    introText: '',
   });
 
   const handleChange = (e) => {
@@ -230,10 +228,14 @@ function Signup({ setIsLoggedIn }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const res = await fetch('http://192.168.0.67:8080/kakao/signup', {
+      const res = await fetch('http://172.16.100.55:8080/kakao/signup', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userData.temporaryToken}`, // ✅ 여기 중요!
+        },
         body: JSON.stringify(form),
       });
 
@@ -244,44 +246,51 @@ function Signup({ setIsLoggedIn }) {
         setIsLoggedIn(true);
         navigate('/calendar');
       } else {
-        alert('회원가입 실패');
+        const errorText = await res.text();
+        console.error('❌ 회원가입 실패 응답:', errorText);
+        alert('회원가입 실패: ' + errorText);
       }
     } catch (err) {
-      console.error('회원가입 오류:', err);
-      alert('서버 오류 발생');
+      console.error('❌ 서버 오류:', err);
+      alert('서버 오류로 회원가입에 실패했습니다.');
     }
   };
 
   return (
     <div className="signup-container">
       <h2>카카오 회원가입</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="email"
-          value={form.email}
-          readOnly
-        />
-        <input
-          type="text"
-          name="nickname"
-          value={form.nickname}
-          onChange={handleChange}
-          placeholder="닉네임"
-        />
-        <input
-          type="text"
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          placeholder="이름"
-        />
-        <textarea
-          name="introText"
-          value={form.introText}
-          onChange={handleChange}
-          placeholder="자기소개"
-        />
+      <form onSubmit={handleSubmit} className="signup-form">
+        <div className="form-group">
+          <label>이메일</label>
+          <input
+            type="email"
+            name="email"
+            value={form.email}
+            readOnly
+          />
+        </div>
+
+        <div className="form-group">
+          <label>닉네임</label>
+          <input
+            type="text"
+            name="nickname"
+            value={form.nickname}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>자기소개</label>
+          <textarea
+            name="introText"
+            value={form.introText}
+            onChange={handleChange}
+            placeholder="자기소개를 입력하세요"
+          />
+        </div>
+
         <button type="submit">회원가입</button>
       </form>
     </div>

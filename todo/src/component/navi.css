@@ -1,20 +1,28 @@
 .navi {
-    position: fixed;
-    bottom: 0;
-    width: 100vw;
-    height: 8vh;
-    background-color: #eeeeee;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-top: 0.2vh solid #ccc;
-    gap: 8vw;
-  }
-  
-  .navi button {
-    background: none;
-    border: none;
-    font-size: 1rem;
-    cursor: pointer;
-  }
-  
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  height: 8vh;
+  background-color: #eeeeee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 0.2vh solid #ccc;
+  gap: 8vw;
+
+  z-index: 9999; /* ✅ 클릭 방해 요소 위로 올림 */
+}
+
+.navi button {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  transition: all 0.2s;
+}
+
+.navi button:hover {
+  font-weight: bold;
+  color: #1a73e8;
+}

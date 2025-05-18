@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import './signup.css'
 
-function Signup({ setIsLoggedIn }) {
+function KakaoSignup({ setIsLoggedIn }) {
   const location = useLocation();
   const navigate = useNavigate();
   const userData = location.state || {};
@@ -9,9 +10,8 @@ function Signup({ setIsLoggedIn }) {
   const [form, setForm] = useState({
     email: userData.email || '',
     nickname: userData.nickname || '',
-    introText: '',
-    kakaoId: userData.kakaoId || '',
     profileUrl: userData.profileUrl || '',
+    introText: '',
   });
 
   const handleChange = (e) => {
@@ -24,10 +24,14 @@ function Signup({ setIsLoggedIn }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       const res = await fetch('http://192.168.0.67:8080/kakao/signup', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userData.temporaryToken}`, // ✅ 여기에 토큰 포함
+        },
         body: JSON.stringify(form),
       });
 
@@ -38,7 +42,8 @@ function Signup({ setIsLoggedIn }) {
         setIsLoggedIn(true);
         navigate('/calendar');
       } else {
-        alert('회원가입 실패');
+        const errorText = await res.text();
+        alert('회원가입 실패: ' + errorText);
       }
     } catch (err) {
       console.error('회원가입 오류:', err);
@@ -51,7 +56,7 @@ function Signup({ setIsLoggedIn }) {
       <h2>카카오 회원가입</h2>
       <form onSubmit={handleSubmit}>
         <input
-          type="text"
+          type="email"
           name="email"
           value={form.email}
           readOnly
@@ -62,6 +67,7 @@ function Signup({ setIsLoggedIn }) {
           value={form.nickname}
           onChange={handleChange}
           placeholder="닉네임"
+          required
         />
         <textarea
           name="introText"
@@ -75,4 +81,4 @@ function Signup({ setIsLoggedIn }) {
   );
 }
 
-export default Signup;
+export default KakaoSignup;

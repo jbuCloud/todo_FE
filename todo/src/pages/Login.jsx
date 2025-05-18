@@ -12,26 +12,26 @@ function Login({ setIsLoggedIn }) {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    // ✅ 테스트 로그인 (서버 없이 id: 1234, pw: 1234)
-    if (username === '1234' && password === '1234') {
-      alert('테스트 로그인에 성공했습니다!');
-      setIsLoggedIn(true);
-      navigate('/calendar');
+    // ✅ 입력 유효성 검사
+    if (!username || !password) {
+      alert('아이디와 비밀번호를 모두 입력해주세요.');
       return;
     }
 
-    // ✅ 실제 서버 요청
     try {
+      // ✅ 서버 요청
       const response = await axios.post(
-        'http://192.168.0.67:8080/get-user/',
+        'http://172.16.100.55:8080/get-user/',
         {
           userId: username,
           userpwd: password,
         }
       );
 
+      // ✅ 로그인 성공 처리
       if (response.data.success) {
         alert('로그인에 성공했습니다!');
+        localStorage.setItem('accessToken', response.data.token); // 서버가 token 키로 토큰을 준다고 가정
         setIsLoggedIn(true);
         navigate('/calendar');
       } else {
@@ -43,6 +43,7 @@ function Login({ setIsLoggedIn }) {
     }
   };
 
+  // ✅ 카카오 로그인
   const handleKakaoLogin = () => {
     window.location.href =
       'https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=52c4872fc30d423c710bb20bb07f874e&redirect_uri=http://localhost:3000/callback';

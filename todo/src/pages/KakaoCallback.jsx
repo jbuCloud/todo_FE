@@ -18,7 +18,7 @@ function KakaoCallback({ setIsLoggedIn }) {
       fetchedRef.current = true;
       console.log('🚀 fetch 실행 시작! 전송할 code:', code);
 
-      fetch('http://192.168.0.67:8080/kakao/login', { // ✅ IP로 통일
+      fetch('http://172.16.100.55:8080/kakao/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -35,17 +35,18 @@ function KakaoCallback({ setIsLoggedIn }) {
             localStorage.setItem('refreshToken', data.refreshToken);
             setIsLoggedIn(true);
             navigate('/calendar');
-         } else if (response.status === 401) {
-  navigate('/signup', {
-    state: {
-      email: data.email,
-      nickname: data.nickname,
-      kakaoId: data.kakaoId,
-      profileUrl: data.profileUrl,
-    },
-  });
-}
- else {
+          } else if (response.status === 401) {
+            // ✅ temporaryToken을 꼭 포함해야 함
+            navigate('/signup', {
+              state: {
+                email: data.email,
+                nickname: data.nickname,
+                kakaoId: data.kakaoId,
+                profileUrl: data.profileUrl,
+                temporaryToken: data.temporaryToken,
+              },
+            });
+          } else {
             throw new Error('예상치 못한 응답입니다.');
           }
         })

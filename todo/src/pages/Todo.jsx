@@ -17,7 +17,7 @@ import './todo.css';
 import { useState } from 'react';
 
 const dummyTodos = {
-  '2025-05-09': [
+  '2025-05-09': [ 
     { text: '[동아리] 피그마 디자인', completed: false },
     { text: '[동아리] 개발하기!', completed: true },
   ],
@@ -660,7 +660,7 @@ const Todo = () => {
   const [selectedTodo, setSelectedTodo] = useState(null);
   const [achievements, setAchievements] = useState({});
 
-  // 새 카테고리 관련 상태
+  // 새 카테고리 관련 상태*
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
   const [newCategory, setNewCategory] = useState('');
 

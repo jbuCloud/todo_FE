@@ -15,7 +15,7 @@ function KakaoCallback({ setIsLoggedIn }) {
     console.log('📍 code:', code);
 
     if (isCallback && code && !fetchedRef.current) {
-      fetchedRef.current = true;
+      fetchedRef.cußrrent = true;
       console.log('🚀 fetch 실행 시작! 전송할 code:', code);
 
       fetch('http://192.168.0.67:8080/kakao/login', { // ✅ IP로 통일

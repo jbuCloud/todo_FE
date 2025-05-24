@@ -254,7 +254,7 @@ function Signup({ setIsLoggedIn }) {
 
   return (
     <div className="signup-container">
-      <h2>카카오 회원가입</h2>
+      <h2>카카오 회원가입*</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"

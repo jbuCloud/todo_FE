@@ -1,37 +1,27 @@
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { FiCalendar, FiCheckSquare, FiRepeat, FiUser } from 'react-icons/fi';
 import './navi.css';
 
-function Navi() {
-  const navigate = useNavigate();
-
+export default function Navi() {
   return (
-    <nav className="navi">
-      <button onClick={() => {
-        console.log('✅ 이동: /calendar');
-        navigate('/calendar');
-      }}>
-        Home
-      </button>
-      <button onClick={() => {
-        console.log('✅ 이동: /todo');
-        navigate('/todo');
-      }}>
-        Todo
-      </button>
-      <button onClick={() => {
-        console.log('✅ 이동: /routine');
-        navigate('/routine');
-      }}>
-        Routine
-      </button>
-      <button onClick={() => {
-        console.log('✅ 이동: /my');
-        navigate('/my');
-      }}>
-        My Page
-      </button>
+    <nav className="navi-bar">
+      <NavLink to="/calendar">
+        <FiCalendar size={24} />
+        <span>Calendar</span>
+      </NavLink>
+      <NavLink to="/todo">
+        <FiCheckSquare size={24} />
+        <span>Todo</span>
+      </NavLink>
+      <NavLink to="/routine">
+        <FiRepeat size={24} />
+        <span>Routine</span>
+      </NavLink>
+      <NavLink to="/my">
+        <FiUser size={24} />
+        <span>My</span>
+      </NavLink>
     </nav>
   );
 }
-
-export default Navi;

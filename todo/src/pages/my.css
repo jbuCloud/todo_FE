@@ -1,347 +1,125 @@
-:root {
-  --primary-color: #1a73e8;
-  --secondary-color: #4285f4;
-  --background-color: #f0f4ff;
-  --text-color: #333333;
-  --gray-100: #f8f9fa;
-  --gray-200: #e9ecef;
-  --gray-300: #dee2e6;
-  --gray-400: #ced4da;
-  --gray-500: #adb5bd;
-  --gray-600: #6c757d;
-  --gray-700: #495057;
-  --gray-800: #343a40;
+.my-page {
+  padding-bottom: 80px; /* 하단 네비바 여유 공간 */
 }
 
-.my-container {
-  width: 100%;
-  min-height: 90vh; /* 헤더와 네비바를 고려한 높이 */
-  padding: 2rem 5%;
-  background-color: var(--gray-100);
+.my-header {
+  position: sticky;
+  top: 0;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  height: 56px;
+  background: #fff;
+  padding: 0 16px;
+  border-bottom: 1px solid #eee;
 }
 
-.my-content {
-  width: 100%;
-  max-width: 50rem;
-  background-color: #ffffff;
-  border-radius: 1rem;
-  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.05);
-  padding: 2.5rem;
+.btn-back,
+.btn-edit,
+.edit-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
-.my-title {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: var(--text-color);
-  margin-bottom: 2rem;
+.my-header h1 {
+  flex: 1;
   text-align: center;
+  font-size: 1.25rem;
+  margin: 0;
 }
 
-/* 프로필 섹션 */
-.profile-section {
+.edit-actions {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  margin-bottom: 3rem;
+  gap: 8px;
 }
 
-.profile-image-container {
+.btn-save {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  margin-bottom: 2rem;
+  gap: 4px;
+  background-color: #4a90e2;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
 }
 
-.profile-image {
-  width: 8rem;
-  height: 8rem;
-  border-radius: 50%;
-  overflow: hidden;
-  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
-  margin-bottom: 1rem;
+.btn-cancel {
+  color: #888;
 }
 
-.profile-image img {
+.profile-card {
+  display: flex;
+  align-items: center;
+  padding: 24px 16px;
+  gap: 16px;
+}
+
+/* 프로필 사진 래퍼: 고정된 100×100px 크기의 원 */
+.avatar-wrapper {
+  width: 80px;           /* 원하는 크기로 조정 */
+  height: 80px;
+  border-radius: 50%;     /* 정사각형을 완전한 원으로 */
+  overflow: hidden;       /* 내부 img는 래퍼 밖으로 벗어나지 않도록 */
+  margin-bottom: 16px;
+  border: 4px solid #4a90e2;
+}
+
+/* 래퍼 안의 img는 100% 채우고 잘라내기 */
+.avatar-wrapper img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover;      /* 이미지 비율 유지하며 잘라내기 */
+  display: block;
 }
 
-.profile-image-upload {
-  margin-top: 0.75rem;
-}
 
-.upload-label {
-  background-color: var(--primary-color);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  font-size: 0.875rem;
-  font-weight: 500;
+.upload-overlay {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 6px;
+  border-radius: 50%;
   cursor: pointer;
-  transition: background-color 0.2s;
 }
 
-.upload-label:hover {
-  background-color: var(--secondary-color);
-}
-
-.upload-input {
+.upload-overlay input {
   display: none;
 }
 
 .profile-info {
-  width: 100%;
-  max-width: 30rem;
-}
-
-.info-row {
-  display: flex;
-  margin-bottom: 1.5rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--gray-200);
-}
-
-.info-label {
-  width: 30%;
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--gray-700);
-}
-
-.info-value {
-  width: 70%;
-  font-size: 1rem;
-  color: var(--text-color);
-}
-
-/* 테마 섹션 */
-.theme-section {
-  margin-bottom: 3rem;
-}
-
-.section-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--text-color);
-  margin-bottom: 0.5rem;
-}
-
-.section-description {
-  font-size: 0.875rem;
-  color: var(--gray-600);
-  margin-bottom: 1.5rem;
-}
-
-.theme-options {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.theme-option {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  width: calc(25% - 1rem);
-  transition: transform 0.2s;
+  width: calc(100% - 112px);
 }
 
-.theme-option:hover {
-  transform: translateY(-0.25rem);
+.profile-name {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: bold;
 }
 
-.theme-color {
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  margin-bottom: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1);
-  transition: all 0.2s;
-}
-
-.theme-option.active .theme-color {
-  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.2);
-  transform: scale(1.1);
-}
-
-.theme-name {
-  font-size: 0.875rem;
-  color: var(--gray-700);
-  margin-top: 0.25rem;
-}
-
-/* 계정 액션 섹션 */
-.account-actions {
-  display: flex;
-  justify-content: center;
-  margin-top: 2rem;
-}
-
-.logout-button {
-  display: flex;
-  align-items: center;
-  background-color: var(--gray-100);
-  color: var(--gray-700);
-  border: 1px solid var(--gray-300);
-  border-radius: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.logout-button:hover {
-  background-color: var(--gray-200);
-  color: var(--gray-800);
-}
-
-.logout-button svg {
-  margin-right: 0.5rem;
-}
-
-/* 반응형 디자인 */
-@media (max-width: 768px) {
-  .my-content {
-    padding: 1.5rem;
-  }
-  
-  .profile-section {
-    flex-direction: column;
-  }
-  
-  .theme-option {
-    width: calc(50% - 0.5rem);
-    margin-bottom: 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .my-container {
-    padding: 1rem;
-  }
-  
-  .my-content {
-    padding: 1rem;
-  }
-  
-  .info-row {
-    flex-direction: column;
-  }
-  
-  .info-label, .info-value {
-    width: 100%;
-  }
-  
-  .info-label {
-    margin-bottom: 0.25rem;
-  }
-  
-  .theme-option {
-    width: calc(50% - 0.5rem);
-  }
-}
-
-/* my.css에 추가할 스타일 */
-
-/* 기존 스타일은 유지하고 상태 메시지 관련 스타일만 추가 */
-
-/* 상태 메시지 행 스타일 */
-.status-message-row {
-  margin-top: 10px;
-}
-
-/* 상태 메시지 컨테이너 */
-.status-message-container {
-  width: 100%;
-  display: flex;
-  align-items: center;
-}
-
-/* 상태 메시지 디스플레이 */
-.status-display {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
-
-/* 상태 메시지 텍스트 */
-.status-display span {
-  flex-grow: 1;
-  margin-right: 10px;
+.profile-status {
+  margin: 4px 0 0;
   color: #333;
   font-size: 0.95rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
-/* 상태 메시지 편집 버튼 */
-.status-edit-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #777;
-  padding: 4px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-}
-
-.status-edit-btn:hover {
-  background-color: var(--background-color);
-  color: var(--primary-color);
-}
-
-/* 상태 메시지 편집 컨테이너 */
-.status-edit-container {
-  display: flex;
-  align-items: center;
+.profile-info input,
+.profile-info textarea {
   width: 100%;
-}
-
-/* 상태 메시지 입력 필드 */
-.status-input {
-  flex-grow: 1;
-  padding: 8px 12px;
-  border: 1px solid #ddd;
+  box-sizing: border-box;
+  margin-bottom: 12px;
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 0.95rem;
-  outline: none;
-  transition: border-color 0.2s ease;
 }
 
-.status-input:focus {
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb), 0.1);
-}
-
-/* 상태 메시지 저장 버튼 */
-.status-save-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--primary-color);
-  margin-left: 8px;
-  padding: 6px;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-}
-
-.status-save-btn:hover {
-  background-color: var(--background-color);
+.profile-info textarea {
+  min-height: 60px;
+  resize: vertical;
 }

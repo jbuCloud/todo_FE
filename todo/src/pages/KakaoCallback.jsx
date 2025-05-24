@@ -1,64 +1,69 @@
 import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import api from '../api';
 
-function KakaoCallback({ setIsLoggedIn }) {
-  const navigate = useNavigate();
-  const fetchedRef = useRef(false);
+export default function KakaoCallback({ setIsLoggedIn, setUser, setNeedsSignup }) {
+  const navigate   = useNavigate();
+  const calledRef  = useRef(false);
 
   useEffect(() => {
-    const isCallback = window.location.pathname === '/callback';
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
+    if (calledRef.current) return;
+    calledRef.current = true;
 
-    console.log('✅ useEffect 실행됨');
-    console.log('📍 현재 경로:', window.location.pathname);
-    console.log('📍 code:', code);
+    // 인가코드 추출
+    const params = new URLSearchParams(window.location.search);
+    const code   = params.get('code');
+    console.log('[KakaoCallback] 콜백 진입, code:', code);
+    alert('인가코드: ' + code);
 
-    if (isCallback && code && !fetchedRef.current) {
-      fetchedRef.current = true;
-      console.log('🚀 fetch 실행 시작! 전송할 code:', code);
-
-      fetch('http://172.16.100.55:8080/kakao/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ code }),
-      })
-        .then(async (response) => {
-          console.log('🟢 서버 응답 상태:', response.status);
-          const data = await response.json();
-          console.log('📦 응답 데이터:', data);
-
-          if (response.status === 200) {
-            localStorage.setItem('accessToken', data.accessToken);
-            localStorage.setItem('refreshToken', data.refreshToken);
-            setIsLoggedIn(true);
-            navigate('/calendar');
-          } else if (response.status === 401) {
-            // ✅ temporaryToken을 꼭 포함해야 함
-            navigate('/signup', {
-              state: {
-                email: data.email,
-                nickname: data.nickname,
-                kakaoId: data.kakaoId,
-                profileUrl: data.profileUrl,
-                temporaryToken: data.temporaryToken,
-              },
-            });
-          } else {
-            throw new Error('예상치 못한 응답입니다.');
-          }
-        })
-        .catch((error) => {
-          console.error('❌ fetch 에러:', error);
-          alert('카카오 로그인 처리 중 오류가 발생했습니다.');
-          navigate('/login');
-        });
+    if (!code) {
+      console.error('[KakaoCallback] 인가코드 없음! /login 이동');
+      alert('인가코드가 없습니다. 다시 로그인해주세요.');
+      navigate('/login', { replace: true });
+      return;
     }
-  }, [navigate, setIsLoggedIn]);
 
-  return <div>카카오 로그인 처리 중입니다...</div>;
+    // 서버에 인가코드로 로그인 요청
+    api.post('/kakao/login', { code })
+      .then(res => res.data)
+      .then(data => {
+        console.log('[KakaoCallback] 서버 응답 data:', data);
+        localStorage.setItem('accessToken', data.accessToken);
+
+        if (data.isNewUser || !data.user) {
+          setNeedsSignup(true);
+          setIsLoggedIn(false);
+          console.warn('[KakaoCallback] 신규유저, /signup 이동');
+          navigate('/signup', { replace: true });
+          return;
+        }
+
+        setIsLoggedIn(true);
+        setNeedsSignup(false);
+        setUser({
+          name:          data.user.name,
+          profileImage:  data.user.avatar,
+          statusMessage: data.user.statusMessage,
+        });
+        console.log('[KakaoCallback] 기존 유저 로그인 성공, /calendar 이동');
+        navigate('/calendar', { replace: true });
+      })
+      .catch(err => {
+        console.error('[KakaoCallback] 카카오 로그인 실패:', err);
+
+        if (err.response?.status === 401 || err.response?.status === 404) {
+          setNeedsSignup(true);
+          setIsLoggedIn(false);
+          console.warn('[KakaoCallback] 401/404 발생, /signup 이동');
+          navigate('/signup', { replace: true });
+        } else {
+          setIsLoggedIn(false);
+          setNeedsSignup(false);
+          alert('카카오 로그인 실패! 콘솔 로그를 확인하세요.');
+          navigate('/login', { replace: true });
+        }
+      });
+  }, [navigate, setIsLoggedIn, setUser, setNeedsSignup]);
+
+  return null;
 }
-
-export default KakaoCallback;

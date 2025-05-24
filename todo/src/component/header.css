@@ -1,79 +1,22 @@
-/*
-.header {
-    background-color: #f3f3f3;
-    padding: 2vh 5vw;
-    text-align: center;
-    border-bottom: 0.2vh solid #ddd;
-  }
-  
-  .logo {
-    font-size: 1.8rem;
-    font-weight: bold;
-  }
-  */
-  .header {
-    width: 100%;
-    height: 4rem;
-    background-color: #ffffff;
-    border-bottom: 1px solid #ccc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-  }
-
-  header h1 {
-  font-size: 20px; /* 원하는 폰트 크기 */
-  white-space: nowrap; /* 텍스트가 한 줄로 표시되도록 */
-  display: flex; /* flexbox로 텍스트 정렬 */
-  justify-content: center; /* 가로 중앙 정렬 */
-  align-items: center; /* 세로 중앙 정렬 */
+.app-header {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: #DCE3EA;
 }
-
-  
-  .header-inner {
-    width: 100%;
-    max-width: 1200px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 2rem;
-  }
-  
-  .logo {
-    width: 4.5rem;
-    height: auto;
-  }
-  
-  .auth-links {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-  }
-  
-  /* 여기부터 새로 추가!! */
-  .auth-links a {
-    color: #555; /* 회색 글씨 */
-    text-decoration: none; /* 밑줄 없애기 */
-    font-weight: 500;
-    font-size: 1rem;
-  }
-  
-  .auth-links a:hover {
-    color: #000; /* 마우스 올리면 진한 검정색으로 변경 (선택사항) */
-  }
-  
-  .logout-button {
-    background: none;
-    border: none;
-    color: #007BFF;
-    cursor: pointer;
-    font-size: 1rem;
-    margin-left: 1rem;
-  }
-  
-  .welcome {
-    font-weight: bold;
-    margin-right: 1rem;
-  }
-  
+.app-header img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  margin-right: 0.75rem;
+}
+.header-info h1 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #2F3E46;
+}
+.header-info p {
+  margin: 0.25rem 0 0;
+  color: #6C757D;
+  font-size: 0.9rem;
+}

@@ -1,47 +1,395 @@
-.todo-page {
-  padding: 1rem;
-  background: #F4F7FA;
-  min-height: calc(100vh - 60px);
+/* 전체 배경, 폰트 */
+.todo-root-bg {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
 }
-.input-box {
+
+/* 상단 프로필 섹션 */
+.profile-section {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.profile-wrapper {
   display: flex;
-  margin-bottom: 1rem;
+  align-items: center;
+  gap: 15px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
-.input-box input {
+.profile-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff6b6b, #feca57);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+}
+.profile-name {
+  margin: 0;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+}
+.profile-status {
+  margin: 5px 0 0 0;
+  color: rgba(255,255,255,0.8);
+  font-size: 14px;
+}
+
+/* 메인 컨텐츠(캘린더+투두) */
+.main-content {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 30px;
+  padding: 30px 20px;
+}
+
+/* 캘린더 카드 */
+.calendar-box {
   flex: 1;
-  padding: 0.5rem;
-  border: none;
-  border-radius: 6px;
-  margin-right: 0.5rem;
+  background: white;
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  height: fit-content;
 }
-.input-box button {
-  background: #A9BCD0;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-}
-.todo-list {
-  list-style: none;
-  padding: 0;
-}
-.todo-list li {
+/* 캘린더 자체 */
+.calendar-container { width: 100%; }
+.calendar-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #DCE3EA;
-  padding: 0.75rem;
-  border-radius: 8px;
-  margin-bottom: 0.5rem;
+  margin-bottom: 20px;
 }
-.todo-list li.done {
-  background: #A9BCD0;
-  text-decoration: line-through;
-  color: #6C757D;
+.calendar-header h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #2d3748;
 }
-.todo-list button {
-  background: transparent;
+.calendar-nav {
+  background: none;
   border: none;
-  font-size: 1.2rem;
+  font-size: 24px;
+  color: #667eea;
   cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+.calendar-nav:hover {
+  background: #f7fafc;
+  color: #4c51bf;
+}
+.calendar-days-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 8px;
+}
+.calendar-day-name {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #718096;
+  padding: 8px 4px;
+}
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+.calendar-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  color: #4a5568;
+}
+.calendar-day:hover {
+  background: #f7fafc;
+}
+.calendar-day.today {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  font-weight: 700;
+}
+.calendar-day.selected {
+  background: #667eea;
+  color: white;
+  font-weight: 600;
+}
+.calendar-day.empty {
+  cursor: default;
+}
+.calendar-day.level-0 { background: #fed7d7; color: #c53030; }
+.calendar-day.level-30 { background: #fef5e7; color: #dd6b20; }
+.calendar-day.level-50 { background: #f0fff4; color: #38a169; }
+.calendar-day.level-70 { background: #c6f6d5; color: #2f855a; }
+.calendar-day.level-100 { background: #9ae6b4; color: #276749; font-weight: 700; }
+
+@media (max-width: 768px) {
+  .calendar-day { font-size: 12px; }
+  .calendar-header h3 { font-size: 18px; }
+}
+
+/* 투두 카드 */
+.todo-box {
+  flex: 1.5;
+  background: white;
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+.todo-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+.todo-date {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #2d3748;
+}
+.todo-progress {
+  margin: 5px 0 0 0;
+  color: #718096;
+  font-size: 14px;
+}
+.todo-add-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: 0.2s;
+}
+.todo-add-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102,126,234,0.3);
+}
+.progress-bar-wrap { margin-bottom: 25px; }
+.progress-bar-bg {
+  background: #f1f3f4;
+  border-radius: 10px;
+  height: 8px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  background: linear-gradient(90deg, #48bb78, #38a169);
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.3s;
+}
+
+/* 투두 리스트, 할 일 없음 */
+.todo-list-scroll { max-height: 400px; overflow-y: auto; }
+.todo-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: #a0aec0;
+}
+.todo-empty p { font-size: 16px; margin: 0; }
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background: #fafafa;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+.todo-item.done {
+  background: #f0fff4;
+  border: 2px solid #48bb78;
+}
+.todo-item:hover:not(.done) {
+  background: #f7fafc;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.todo-check {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #cbd5e0;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+.todo-check.checked {
+  border-color: #48bb78;
+  background: #48bb78;
+}
+.todo-main { flex: 1; }
+.todo-text { font-size: 16px; color: #2d3748; font-weight: 500; }
+.todo-item.done .todo-text { color: #68d391; text-decoration: line-through; }
+.todo-category-badge {
+  margin-left: 10px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.todo-edit-btn {
+  background: none;
+  border: none;
+  color: #a0aec0;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+.todo-edit-btn:hover {
+  background: #edf2f7;
+  color: #4a5568;
+}
+
+/* 모달 스타일 */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+.modal-content-modal {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  min-width: 400px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  position: relative;
+}
+.modal-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: #a0aec0;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+.modal-close-btn:hover { background: #f7fafc; color: #4a5568; }
+.modal-title {
+  margin: 0 0 25px 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #2d3748;
+}
+.modal-input {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 16px;
+  margin-bottom: 15px;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+.modal-btns {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.modal-save-btn {
+  background: linear-gradient(135deg, #48bb78, #38a169);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.modal-save-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
+}
+.modal-del-btn {
+  background: linear-gradient(135deg, #f56565, #e53e3e);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: 0.2s;
+}
+.modal-del-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(245, 101, 101, 0.3);
+}
+.modal-repeat-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: 0.2s;
+}
+.modal-repeat-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+/* 반응형 */
+@media (max-width: 900px) {
+  .main-content { flex-direction: column; gap: 15px; padding: 15px; }
+  .calendar-box, .todo-box { border-radius: 16px; padding: 15px; }
+}
+@media (max-width: 600px) {
+  .calendar-box, .todo-box { min-width: 0; padding: 10px; border-radius: 10px; }
+  .modal-content-modal { min-width: 0; padding: 10px; border-radius: 10px; }
 }

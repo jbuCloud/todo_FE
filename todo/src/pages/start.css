@@ -1,0 +1,33 @@
+/* src/pages/start.css */
+.start-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f4f7fa;
+  font-family: 'Pretendard', sans-serif;
+}
+
+.start-container h1 {
+  font-size: 2rem;
+  color: #2f3e46;
+  margin-bottom: 40px;
+}
+
+.start-container button {
+  width: 200px;
+  padding: 12px;
+  margin: 10px 0;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #a9bcd0;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.start-container button:hover {
+  background-color: #8da4ba;
+}

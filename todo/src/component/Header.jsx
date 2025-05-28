@@ -1,34 +1,18 @@
-/*
 import React from 'react';
-import './header.css';
+import './header.css'; // (아바타, 이름, 자기소개 꾸미는 css)
 
-export default function Header({ user }) {
+export default function Header({ user = {} }) {
   return (
-    <header className="app-header">
-      {user.profileImage && <img src={user.profileImage} alt="avatar" />}
-      <div className="header-info">
-        <h1>{user.name}님, 환영합니다!</h1>
-        {user.statusMessage && <p>{user.statusMessage}</p>}
-      </div>
-    </header>
-  );
-}
-
-*/
-
-import React from 'react';
-import './header.css';
-
-export default function Header({ user }) {
-  return (
-    <header className="main-header">
-      <div className="header-profile">
-        <img className="header-avatar" src={user?.profileImage} alt="avatar" />
+    <div className="profile-section">
+      <div className="profile-wrapper">
+        <div className="profile-avatar">
+          {user.name?.[0] || '김'}
+        </div>
         <div>
-          <div className="header-name">{user?.name || '이름없음'}</div>
-          <div className="header-status">{user?.statusMessage || '상태메시지 없음'}</div>
+          <h2 className="profile-name">{user.name || '김종민'}</h2>
+          <p className="profile-status">{user.statusMessage || '오늘도 화이팅!'}</p>
         </div>
       </div>
-    </header>
+    </div>
   );
 }

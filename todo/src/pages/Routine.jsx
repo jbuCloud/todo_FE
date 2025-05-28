@@ -6,6 +6,7 @@ import './routine.css';
 
 const WEEKDAYS = ['일', '월', '화', '수', '목', '금', '토'];
 
+// 캘린더 컴포넌트
 const Calendar = ({ onChange, value, tileClassName }) => {
   const today = new Date();
   const currentMonth = value.getMonth();
@@ -68,7 +69,7 @@ export default function RoutinePage({ user = {} }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRoutine, setSelectedRoutine] = useState(null);
 
-  // 루틴 필드들
+  // 루틴 등록/수정 필드
   const [text, setText] = useState('');
   const [category, setCategory] = useState('');
   const [startDate, setStartDate] = useState('');
@@ -126,7 +127,6 @@ export default function RoutinePage({ user = {} }) {
     const updatedRoutine = { 
       ...selectedRoutine, text, category, startDate, endDate, weekdays 
     };
-
     if (selectedRoutine) {
       const updated = todayRoutines.map((r) =>
         r.id === selectedRoutine.id ? updatedRoutine : r
@@ -159,6 +159,14 @@ export default function RoutinePage({ user = {} }) {
   const handleCategoryDelete = () => {
     setCategory('');
     setEditingCategory(false);
+  };
+
+  // 루틴 완료 토글
+  const toggleDone = (routine) => {
+    const updated = todayRoutines.map((r) =>
+      r.id === routine.id ? { ...r, done: !r.done } : r
+    );
+    setRoutines({ ...routines, [dateKey]: updated });
   };
 
   const formatDate = (date) => {
@@ -214,12 +222,19 @@ export default function RoutinePage({ user = {} }) {
                 <div
                   key={routine.id}
                   className={`routine-item${routine.done ? ' done' : ''}`}
-                  // onClick 등은 필요시 완료체크 등 추가
                 >
-                  <div className={`routine-check${routine.done ? ' checked' : ''}`}>
-                    {routine.done && <FiCheck size={14} color="white" />}
+                  {/* 완료(동그라미) 왼쪽 */}
+                  <div 
+                    className={`routine-check${routine.done ? ' checked' : ''}`}
+                    onClick={() => toggleDone(routine)}
+                    style={{ cursor: 'pointer', marginRight: 24, minWidth: 32, minHeight: 32, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  >
+                    {routine.done
+                      ? <FiCheck size={22} color="#a18cd1" />
+                      : <div style={{ width: 28, height: 28, border: '2px solid #a18cd1', borderRadius: '50%' }} />}
                   </div>
-                  <div className="routine-main">
+                  {/* 루틴 텍스트 및 정보 */}
+                  <div className="routine-main-info">
                     <span className="routine-text">{routine.text}</span>
                     {routine.category && (
                       <span className="routine-category-badge">#{routine.category}</span>
@@ -233,8 +248,9 @@ export default function RoutinePage({ user = {} }) {
                       </span>
                     )}
                   </div>
-                  <button className="routine-edit-btn" onClick={(e) => { e.stopPropagation(); openEditModal(routine); }}>
-                    <FiEdit size={16} />
+                  {/* 수정(서류) 버튼 - 오른쪽 */}
+                  <button className="routine-edit-btn" style={{ marginLeft: 'auto' }} onClick={(e) => { e.stopPropagation(); openEditModal(routine); }}>
+                    <FiEdit size={20} />
                   </button>
                 </div>
               ))
